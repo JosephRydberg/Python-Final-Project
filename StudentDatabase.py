@@ -12,8 +12,15 @@ import sqlite3
 
 # mainline for displaying information and allowing user to edit the database
 def main():
-    pass
-    # Connect to the database.
+    connection = sqlite3.connect("studentInfo")
+    cursor = connection.cursor()
+
+    add_info_table(cursor)
+    add_info(cursor)
+    cursor.execute('SELECT * FROM studentInfo')
+    results = cursor.fetchall()
+    for row in results:
+        print(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')
     # Get a database cursor.
     # Add the StudentInfo table.
     # Add rows to the StudentInfo table.
@@ -21,10 +28,11 @@ def main():
     # Display the info.
     # Close the connection.
 
-def add_info_table():
-    pass
+def add_info_table(cursor):
+    cursor.execute('DROP TABLE IF EXISTS studentInfo')
+    cursor.execute('CREATE TABLE studentInfo (ID INTEGER, First TEXT, Last TEXT, Email TEXT, Age INTEGER, Birth TEXT, Location TEXT)')
 
-def add_info():
+def add_info(cursor):
     student_info_list = [(200, 'Mary', 'Smith', 'mary.smith@notrealmail.com', 18, '02-17-2006', 'Glencoe, MN'),
                          (201, 'John', 'Doe', 'john.doe@notrealmail.com', 17, '10-06-2007', 'Minneapolis, MN'),
                          (202, 'James', 'Brown', 'james.brown@notrealmail.com',  19, '11-16-2005', 'Montevideo, MN'),
@@ -37,7 +45,7 @@ def add_info():
                          (209, 'Henry', 'Miller', 'henry.miller@notrealmail.com', 18, '10-23-2006', 'Minnetonka, MN')]
 
     for row in student_info_list:
-        pass
+        cursor.execute('''INSERT INTO studentInfo (ID, First, Last, Email, Age, Birth, Location) VALUES (?, ?, ?, ?, ?, ?, ?)''', (row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         # insert info into the database
 
 
