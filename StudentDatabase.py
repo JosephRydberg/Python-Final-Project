@@ -17,10 +17,7 @@ def main():
 
     add_info_table(cursor)
     add_info(cursor)
-    cursor.execute('SELECT * FROM studentInfo')
-    results = cursor.fetchall()
-    for row in results:
-        print(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')
+    read_info(cursor)
     # Get a database cursor.
     # Add the StudentInfo table.
     # Add rows to the StudentInfo table.
@@ -28,10 +25,12 @@ def main():
     # Display the info.
     # Close the connection.
 
+#Reads files checking for info deleting previous and creating a new one with parameters
 def add_info_table(cursor):
     cursor.execute('DROP TABLE IF EXISTS studentInfo')
     cursor.execute('CREATE TABLE studentInfo (ID INTEGER, First TEXT, Last TEXT, Email TEXT, Age INTEGER, Birth TEXT, Location TEXT)')
 
+#Adds predefined information
 def add_info(cursor):
     student_info_list = [(200, 'Mary', 'Smith', 'mary.smith@notrealmail.com', 18, '02-17-2006', 'Glencoe, MN'),
                          (201, 'John', 'Doe', 'john.doe@notrealmail.com', 17, '10-06-2007', 'Minneapolis, MN'),
@@ -43,12 +42,17 @@ def add_info(cursor):
                          (207, 'Jacob', 'Jones', 'jacob.jones@notrealmail.com', 18, '05-05-2006', 'Mankato, MN'),
                          (208, 'Emma', 'Jackson', 'emma.jackson@notrealmail.com', 17, '06-01-2007', 'Anoka, MN'),
                          (209, 'Henry', 'Miller', 'henry.miller@notrealmail.com', 18, '10-23-2006', 'Minnetonka, MN')]
-
+    #Adds information into the database
     for row in student_info_list:
         cursor.execute('''INSERT INTO studentInfo (ID, First, Last, Email, Age, Birth, Location) VALUES (?, ?, ?, ?, ?, ?, ?)''', (row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         # insert info into the database
 
-
+#Reads information into print statement
+def read_info(cursor):
+    cursor.execute('SELECT * FROM studentInfo')
+    results = cursor.fetchall()
+    for row in results:
+        print(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')
 
 # execute the main function
 if __name__ =='__main__':
