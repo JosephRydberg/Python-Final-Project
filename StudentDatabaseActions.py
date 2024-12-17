@@ -33,8 +33,8 @@ def info_gui():
 
     # display actions user can take
     add_button = tkinter.Button(frame4, text='Add Info', command=add_info)
-    edit_button = tkinter.Button(frame5, text='Edit Info')
-    delete_button = tkinter.Button(frame6, text='Delete Info')
+    edit_button = tkinter.Button(frame5, text='Edit Info', command=edit_info)
+    delete_button = tkinter.Button(frame6, text='Delete Info', command=delete_info)
     dividing_line2 = tkinter.Label(frame7, text='-------------------------------------------------------' )
     exit_button = tkinter.Button(frame8, text='Exit Program', command=main_window.destroy)
     # pack the labels and buttons
@@ -134,15 +134,61 @@ def add_info():
 
 # Edit info function - allows user to edit information in the database
 def edit_info():
-    # edit: 3 text inputs with button selecting the row id and column that’s being changed and then the new value they want it to be, update the database
-    # make a new screen show up? and have the user enter the id they want to change
+    window3 = tkinter.Tk()
+    window3.title('Edit Info')
 
-    pass
+    frame1 = tkinter.Frame(window3)
+    frame2 = tkinter.Frame(window3)
+    frame3 = tkinter.Frame(window3)
+    frame4 = tkinter.Frame(window3)
+    frame5 = tkinter.Frame(window3)
+
+    main_label = tkinter.Label(frame1, text='Edit Information', font=('Normal', 14))
+    row_label = tkinter.Label(frame2, text='Row')
+    row_entry = tkinter.Entry(frame2)
+    column_label = tkinter.Label(frame3, text='Column')
+    column_entry = tkinter.Entry(frame3)
+    edit_label = tkinter.Label(frame4, text='Enter Information')
+    edit_entry = tkinter.Entry(frame4)
+    edit = tkinter.Button(frame5, text='Edit')
+
+    main_label.pack(side='left')
+    row_label.pack(side='left')
+    row_entry.pack(side='left')
+    column_label.pack(side='left')
+    column_entry.pack(side='left')
+    edit_label.pack(side='left')
+    edit_entry.pack(side='left')
+    edit.pack(side='left')
+
+    frame1.pack()
+    frame2.pack()
+    frame3.pack()
+    frame4.pack()
+    frame5.pack()
 
 # Delete info function - allows user to delete information in the database
 def delete_info():
-    # delete: 1 text input with button that chooses which id row, and then removing it from the database
-    pass
+    window4 = tkinter.Tk()
+    window4.title('Edit Info')
+
+    frame1 = tkinter.Frame(window4)
+    frame2 = tkinter.Frame(window4)
+    frame3 = tkinter.Frame(window4)
+
+    main_label = tkinter.Label(frame1, text='Delete Student', font=('Normal', 14))
+    row_label = tkinter.Label(frame2, text='Row ID')
+    row_entry = tkinter.Entry(frame2)
+    delete = tkinter.Button(frame3, text='Delete')
+
+    main_label.pack(side='left')
+    row_label.pack(side='left')
+    row_entry.pack(side='left')
+    delete.pack(side='left')
+
+    frame1.pack()
+    frame2.pack()
+    frame3.pack()
 
 
 if __name__ == '__main__':
