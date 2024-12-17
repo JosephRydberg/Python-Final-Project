@@ -4,26 +4,29 @@
 
 import sqlite3
 
-'''class StudentInfo:
-    def __init__(self):
-        # use init function with these variables
-        #student id, first name, last name, email, age, birthday, hometown (town and then state)
-        # add varables to database with primary key id'''
 
 # mainline for displaying information and allowing user to edit the database
 def main():
+    # Connect to the database.
     connection = sqlite3.connect("studentInfo")
+
+    # Get a database cursor.
     cursor = connection.cursor()
 
-    add_info_table(cursor)
-    add_info(cursor)
-    read_info(cursor)
-    # Get a database cursor.
     # Add the StudentInfo table.
+    add_info_table(cursor)
+
     # Add rows to the StudentInfo table.
+    add_info(cursor)
+
+    # read the info
+    read_info(cursor)
+
     # Commit the changes.
-    # Display the info.
+    connection.commit()
+
     # Close the connection.
+    connection.close()
 
 #Reads files checking for info deleting previous and creating a new one with parameters
 def add_info_table(cursor):
@@ -44,8 +47,8 @@ def add_info(cursor):
                          (209, 'Henry', 'Miller', 'henry.miller@notrealmail.com', 18, '10-23-2006', 'Minnetonka, MN')]
     #Adds information into the database
     for row in student_info_list:
-        cursor.execute('''INSERT INTO studentInfo (ID, First, Last, Email, Age, Birth, Location) VALUES (?, ?, ?, ?, ?, ?, ?)''', (row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         # insert info into the database
+        cursor.execute('''INSERT INTO studentInfo (ID, First, Last, Email, Age, Birth, Location) VALUES (?, ?, ?, ?, ?, ?, ?)''', (row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
 
 #Reads information into print statement
 def read_info(cursor):
