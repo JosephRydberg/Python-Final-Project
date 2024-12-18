@@ -31,7 +31,7 @@ def main():
 #Reads files checking for info deleting previous and creating a new one with parameters
 def add_info_table(cursor):
     cursor.execute('DROP TABLE IF EXISTS studentInfo')
-    cursor.execute('CREATE TABLE studentInfo (ID INTEGER, First TEXT, Last TEXT, Email TEXT, Age INTEGER, Birth TEXT, Location TEXT)')
+    cursor.execute('CREATE TABLE studentInfo (ID TEXT, First TEXT, Last TEXT, Email TEXT, Age TEXT, Birth TEXT, Location TEXT)')
 
 #Adds predefined information
 def add_info(cursor):
