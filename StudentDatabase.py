@@ -8,7 +8,7 @@ import sqlite3
 # mainline for displaying information and allowing user to edit the database
 def main():
     # Connect to the database.
-    connection = sqlite3.connect("studentInfo")
+    connection = sqlite3.connect('studentDatabase.db')
 
     # Get a database cursor.
     cursor = connection.cursor()

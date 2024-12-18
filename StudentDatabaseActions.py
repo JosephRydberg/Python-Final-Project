@@ -4,7 +4,6 @@
 
 import sqlite3
 import tkinter
-import tkinter.messagebox
 
 # mainline
 def main():
@@ -26,7 +25,7 @@ def info_gui():
     frame7 = tkinter.Frame(main_window)
     frame8 = tkinter.Frame(main_window)
 
-    # display the information in the database (in a messagebox?)
+    # display the information in the database
     database_label = tkinter.Label(frame1, text='Student Database', font=('Times New Roman', 18, 'bold') )
     dividing_line = tkinter.Label(frame2, text='-------------------------------------------------------')
     show_database_button = tkinter.Button(frame3, text='Show Current Database Info', command=show_database)
@@ -62,12 +61,32 @@ def info_gui():
 
 # Show database function
 def show_database():
-    tkinter.messagebox.showinfo('Student Database', 'Student Database \n Databse information will be put here')
+    # create window
+    data_window = tkinter.Tk()
+    data_window.title('Student Database')
+
+    frame1 = tkinter.Frame(data_window)
+    frame2 = tkinter.Frame(data_window)
+
+    title = tkinter.Label(frame1, text='Student Database', font=('Normal', 14))
+
+    conn = sqlite3.connect('studentDatabase.db')
+    cur1 = conn.cursor()
+    cur1.execute("SELECT * FROM studentInfo")
+    rows = cur1.fetchall()
+    for row in rows:
+        label_test = tkinter.Label(frame2, text=f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')
+
+    title.pack(side='left')
+    label_test.pack(side='left')
+
+    frame1.pack()
+    frame2.pack()
+
 
 # Add info function - allows user to add info to the database
 def add_info():
     # *add: have 7 text inputs that are requesting the info then when the “add” button is pressed add inputs into the student info class to then be added to the database
-    # *make a new screen show up? and then the user will enter the added information
     window2 = tkinter.Tk()
     window2.title('Add Info')
 
