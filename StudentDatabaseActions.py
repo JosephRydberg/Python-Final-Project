@@ -71,14 +71,15 @@ def show_database():
     title = tkinter.Label(frame1, text='Student Database', font=('Normal', 14))
 
     conn = sqlite3.connect('studentDatabase.db')
-    cur1 = conn.cursor()
-    cur1.execute("SELECT * FROM studentInfo")
-    rows = cur1.fetchall()
-    for row in rows:
-        label_test = tkinter.Label(frame2, text=f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM studentInfo')
+    results = cursor.fetchall()
 
-    title.pack(side='left')
-    label_test.pack(side='left')
+    title.pack()
+    #Packing side left forces them on the same line. Having them centered allows for a list
+    for row in results:
+        label_test = tkinter.Label(data_window, text=(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')).pack()
+
 
     frame1.pack()
     frame2.pack()
@@ -101,6 +102,17 @@ def add_info():
     frame8 = tkinter.Frame(window2)
     frame9 = tkinter.Frame(window2)
 
+    #Gets the database and adds information from the entries into the database
+    def info_to_database():
+        conn = sqlite3.connect('studentDatabase.db')
+        cursor = conn.cursor()
+        cursor.execute(
+            '''INSERT INTO studentInfo (ID, First, Last, Email, Age, Birth, Location) VALUES (?, ?, ?, ?, ?, ?, ?)''',
+            (id_entry.get(), first_entry.get(), last_entry.get(), email_entry.get(), age_entry.get(), birth_entry.get(), location_entry.get()))
+        window2.destroy()
+        conn.commit()
+        conn.close()
+
     # Labels and entries
     main_label = tkinter.Label(frame1, text='Add Information', font=('Normal', 14))
     id_label = tkinter.Label(frame2, text='ID:')
@@ -117,7 +129,7 @@ def add_info():
     birth_entry = tkinter.Entry(frame7)
     location_label = tkinter.Label(frame8, text='Hometown (City, State(abbr.)): ')
     location_entry = tkinter.Entry(frame8)
-    submit_info = tkinter.Button(frame9, text='Enter')
+    submit_info = tkinter.Button(frame9, text='Enter', command=info_to_database)
 
 
     # Pack labels and entries
@@ -195,10 +207,19 @@ def delete_info():
     frame2 = tkinter.Frame(window4)
     frame3 = tkinter.Frame(window4)
 
+    conn = sqlite3.connect('studentDatabase.db')
+
+    #Gets the row ID from the entry and then removes that row
+    def delete_id():
+        conn.execute('''DELETE FROM studentInfo WHERE ID=?''', (row_entry.get(),))
+        window4.destroy()
+        conn.commit()
+        conn.close()
+
     main_label = tkinter.Label(frame1, text='Delete Student', font=('Normal', 14))
     row_label = tkinter.Label(frame2, text='Row ID')
     row_entry = tkinter.Entry(frame2)
-    delete = tkinter.Button(frame3, text='Delete')
+    delete = tkinter.Button(frame3, text='Delete', command=delete_id)
 
     main_label.pack(side='left')
     row_label.pack(side='left')
