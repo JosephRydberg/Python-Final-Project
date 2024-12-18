@@ -68,22 +68,21 @@ def show_database():
     frame1 = tkinter.Frame(data_window)
     frame2 = tkinter.Frame(data_window)
 
-    title = tkinter.Label(frame1, text='Student Database', font=('Normal', 14))
-
     conn = sqlite3.connect('studentDatabase.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM studentInfo')
     results = cursor.fetchall()
 
-    title.pack()
+    exit_button = tkinter.Button(frame2, text='Exit', command=data_window.destroy)
+
     #Packing side left forces them on the same line. Having them centered allows for a list
     for row in results:
         label_test = tkinter.Label(data_window, text=(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')).pack()
 
+    exit_button.pack(side='right')
 
     frame1.pack()
     frame2.pack()
-
 
 # Add info function - allows user to add info to the database
 def add_info():
