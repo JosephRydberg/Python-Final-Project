@@ -174,14 +174,24 @@ def edit_info():
     frame4 = tkinter.Frame(window3)
     frame5 = tkinter.Frame(window3)
 
+    #Allows entry to define what value will be changed and changes it
+    def edit_student_info():
+        conn = sqlite3.connect('studentDatabase.db')
+        cursor = conn.cursor()
+        cursor.execute("UPDATE studentInfo SET " + column_entry.get() + " =? WHERE ID =?", (edit_entry.get(), row_entry.get()))
+        conn.commit()
+        window3.destroy()
+        conn.close()
+
     main_label = tkinter.Label(frame1, text='Edit Information', font=('Normal', 14))
+    second_label = tkinter.Label(frame1, text='Type 1 into column: ID, First, Last, Email, Age, Birth, Location')
     row_label = tkinter.Label(frame2, text='Row')
     row_entry = tkinter.Entry(frame2)
     column_label = tkinter.Label(frame3, text='Column')
     column_entry = tkinter.Entry(frame3)
     edit_label = tkinter.Label(frame4, text='Enter Information')
     edit_entry = tkinter.Entry(frame4)
-    edit = tkinter.Button(frame5, text='Edit')
+    edit = tkinter.Button(frame5, text='Edit', command=edit_student_info)
 
     main_label.pack(side='left')
     row_label.pack(side='left')
