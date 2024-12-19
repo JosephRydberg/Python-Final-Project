@@ -5,17 +5,17 @@
 import sqlite3
 import tkinter
 
-# mainline
+# Mainline
 def main():
     info_gui()
 
-# create a GUI to display the information
+# Create a GUI to display the information
 def info_gui():
-    # create main window
+    # Create main window
     main_window = tkinter.Tk()
     main_window.title('Student Database')
 
-    # create frames
+    # Create frames
     frame1 = tkinter.Frame(main_window)
     frame2 = tkinter.Frame(main_window)
     frame3 = tkinter.Frame(main_window)
@@ -25,18 +25,19 @@ def info_gui():
     frame7 = tkinter.Frame(main_window)
     frame8 = tkinter.Frame(main_window)
 
-    # display the information in the database
+    # Display the information in the database
     database_label = tkinter.Label(frame1, text='Student Database', font=('Times New Roman', 18, 'bold') )
     dividing_line = tkinter.Label(frame2, text='-------------------------------------------------------')
     show_database_button = tkinter.Button(frame3, text='Show Current Database Info', command=show_database)
 
-    # display actions user can take
+    # Display actions user can take
     add_button = tkinter.Button(frame4, text='Add Info', command=add_info)
     edit_button = tkinter.Button(frame5, text='Edit Info', command=edit_info)
     delete_button = tkinter.Button(frame6, text='Delete Info', command=delete_info)
     dividing_line2 = tkinter.Label(frame7, text='-------------------------------------------------------' )
     exit_button = tkinter.Button(frame8, text='Exit Program', command=main_window.destroy)
-    # pack the labels and buttons
+
+    # Pack the labels and buttons
     database_label.pack(side='left')
     dividing_line.pack(side='left')
     show_database_button.pack(side='left')
@@ -46,7 +47,7 @@ def info_gui():
     dividing_line2.pack(side='left')
     exit_button.pack(side='left')
 
-    #pack the frames
+    # Pack the frames
     frame1.pack()
     frame2.pack()
     frame3.pack()
@@ -65,28 +66,32 @@ def show_database():
     data_window = tkinter.Tk()
     data_window.title('Student Database')
 
+    # Create frames
     frame1 = tkinter.Frame(data_window)
     frame2 = tkinter.Frame(data_window)
 
+    # Connecting to the Database
     conn = sqlite3.connect('studentDatabase.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM studentInfo')
     results = cursor.fetchall()
 
+    # Exit button
     exit_button = tkinter.Button(frame2, text='Exit', command=data_window.destroy)
 
     #Packing side left forces them on the same line. Having them centered allows for a list
     for row in results:
-        label_test = tkinter.Label(data_window, text=(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')).pack()
+        label_info = tkinter.Label(data_window, text=(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')).pack()
 
+    # Pack the button and frames
     exit_button.pack(side='right')
-
     frame1.pack()
     frame2.pack()
 
 # Add info function - allows user to add info to the database
 def add_info():
-    # *add: have 7 text inputs that are requesting the info then when the “add” button is pressed add inputs into the student info class to then be added to the database
+    # Add: have 7 text inputs that are requesting the info then when the “add” button is pressed add inputs into the student info class to then be added to the database
+    # Create window
     window2 = tkinter.Tk()
     window2.title('Add Info')
 
@@ -101,8 +106,9 @@ def add_info():
     frame8 = tkinter.Frame(window2)
     frame9 = tkinter.Frame(window2)
 
-    #Gets the database and adds information from the entries into the database
+    # Gets the database and adds information from the entries into the database
     def info_to_database():
+        # Connect to database
         conn = sqlite3.connect('studentDatabase.db')
         cursor = conn.cursor()
         cursor.execute(
@@ -164,58 +170,70 @@ def add_info():
 
 # Edit info function - allows user to edit information in the database
 def edit_info():
+    # Creates window
     window3 = tkinter.Tk()
     window3.title('Edit Info')
 
+    # Creates frames
     frame1 = tkinter.Frame(window3)
     frame2 = tkinter.Frame(window3)
     frame3 = tkinter.Frame(window3)
     frame4 = tkinter.Frame(window3)
     frame5 = tkinter.Frame(window3)
+    frame6 = tkinter.Frame(window3)
+
+    # Connect to database
+    conn = sqlite3.connect('studentDatabase.db')
 
     #Allows entry to define what value will be changed and changes it
     def edit_student_info():
-        conn = sqlite3.connect('studentDatabase.db')
-        cursor = conn.cursor()
-        cursor.execute("UPDATE studentInfo SET " + column_entry.get() + " =? WHERE ID =?", (edit_entry.get(), row_entry.get()))
+        conn.execute("UPDATE studentInfo SET " + column_entry.get() + " =? WHERE ID =?", (edit_entry.get(), row_entry.get()))
         conn.commit()
         window3.destroy()
         conn.close()
 
+    # Creates labels, entries, and button for editing information
     main_label = tkinter.Label(frame1, text='Edit Information', font=('Normal', 14))
-    second_label = tkinter.Label(frame1, text='Type 1 into column: ID, First, Last, Email, Age, Birth, Location')
-    row_label = tkinter.Label(frame2, text='Row')
+    row_label = tkinter.Label(frame2, text='ID:')
     row_entry = tkinter.Entry(frame2)
-    column_label = tkinter.Label(frame3, text='Column')
+    column_label = tkinter.Label(frame3, text='Feild:')
     column_entry = tkinter.Entry(frame3)
-    edit_label = tkinter.Label(frame4, text='Enter Information')
-    edit_entry = tkinter.Entry(frame4)
-    edit = tkinter.Button(frame5, text='Edit', command=edit_student_info)
+    second_label = tkinter.Label(frame4, text='(Type 1: ID, First, Last, Email, Age, Birth, Location)',font=('Normal', 7))
+    edit_label = tkinter.Label(frame5, text='Enter New Information:')
+    edit_entry = tkinter.Entry(frame5)
+    edit = tkinter.Button(frame6, text='Edit', command=edit_student_info)
 
+    # Pack labels, entries, and button
     main_label.pack(side='left')
     row_label.pack(side='left')
     row_entry.pack(side='left')
     column_label.pack(side='left')
     column_entry.pack(side='left')
+    second_label.pack(side='left')
     edit_label.pack(side='left')
     edit_entry.pack(side='left')
     edit.pack(side='left')
 
+    # Pack frames
     frame1.pack()
     frame2.pack()
     frame3.pack()
     frame4.pack()
     frame5.pack()
+    frame6.pack()
 
 # Delete info function - allows user to delete information in the database
 def delete_info():
+    # Create window
     window4 = tkinter.Tk()
     window4.title('Edit Info')
 
+    # Create frames
     frame1 = tkinter.Frame(window4)
     frame2 = tkinter.Frame(window4)
     frame3 = tkinter.Frame(window4)
 
+    # Connect to database
     conn = sqlite3.connect('studentDatabase.db')
 
     #Gets the row ID from the entry and then removes that row
@@ -225,16 +243,19 @@ def delete_info():
         conn.commit()
         conn.close()
 
+    # Create labels, entries, and buttons for deleting info
     main_label = tkinter.Label(frame1, text='Delete Student', font=('Normal', 14))
-    row_label = tkinter.Label(frame2, text='Row ID')
+    row_label = tkinter.Label(frame2, text='ID:')
     row_entry = tkinter.Entry(frame2)
     delete = tkinter.Button(frame3, text='Delete', command=delete_id)
 
+    # Pack labels, entries, and buttons
     main_label.pack(side='left')
     row_label.pack(side='left')
     row_entry.pack(side='left')
     delete.pack(side='left')
 
+    # Pack frames
     frame1.pack()
     frame2.pack()
     frame3.pack()
