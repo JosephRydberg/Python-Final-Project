@@ -34,16 +34,16 @@ def add_info_table(cursor):
 
 #Adds predefined information
 def add_info(cursor):
-    student_info_list = [('200', 'Mary', 'Smith', 'mary.smith@notrealmail.com', '18', '02-17-2006', 'Glencoe, MN'),
-                         ('201', 'John', 'Doe', 'john.doe@notrealmail.com', '17', '10-06-2007', 'Minneapolis, MN'),
-                         ('202', 'James', 'Brown', 'james.brown@notrealmail.com',  '19', '11-16-2005', 'Montevideo, MN'),
-                         ('203', 'Leah', 'Martin', 'leah.martin@notrealmail.com', '18', '07-30-2006', 'Rochester, MN'),
-                         ('204', 'Noah', 'Wilson', 'noah.wilson@notrealmail.com', '18', '05-20-2006', 'Lakeville, MN'),
-                         ('205', 'Amy', 'Johnson', 'amy.johnson@notrealmail.com', '19', '12-02-2005', 'Edina, MN'),
-                         ('206', 'William', 'Taylor', 'william.taylor@notrealmail.com', '17', '09-18-2007', 'Duluth, MN'),
-                         ('207', 'Jacob', 'Jones', 'jacob.jones@notrealmail.com', '18', '05-05-2006', 'Mankato, MN'),
-                         ('208', 'Emma', 'Jackson', 'emma.jackson@notrealmail.com', '17', '06-01-2007', 'Anoka, MN'),
-                         ('209', 'Henry', 'Miller', 'henry.miller@notrealmail.com', '18', '10-23-2006', 'Minnetonka, MN')]
+    student_info_list = [(200, 'Mary', 'Smith', 'mary.smith@notrealmail.com', 18, '02-17-2006', 'Glencoe, MN'),
+                         (201, 'John', 'Doe', 'john.doe@notrealmail.com', 17, '10-06-2007', 'Minneapolis, MN'),
+                         (202, 'James', 'Brown', 'james.brown@notrealmail.com',  19, '11-16-2005', 'Montevideo, MN'),
+                         (203, 'Leah', 'Martin', 'leah.martin@notrealmail.com', 18, '07-30-2006', 'Rochester, MN'),
+                         (204, 'Noah', 'Wilson', 'noah.wilson@notrealmail.com', 18, '05-20-2006', 'Lakeville, MN'),
+                         (205, 'Amy', 'Johnson', 'amy.johnson@notrealmail.com', 19, '12-02-2005', 'Edina, MN'),
+                         (206, 'William', 'Taylor', 'william.taylor@notrealmail.com', 17, '09-18-2007', 'Duluth, MN'),
+                         (207, 'Jacob', 'Jones', 'jacob.jones@notrealmail.com', 18, '05-05-2006', 'Mankato, MN'),
+                         (208, 'Emma', 'Jackson', 'emma.jackson@notrealmail.com', 17, '06-01-2007', 'Anoka, MN'),
+                         (209, 'Henry', 'Miller', 'henry.miller@notrealmail.com', 18, '10-23-2006', 'Minnetonka, MN')]
     #Adds information into the database
     for row in student_info_list:
         # insert info into the database
