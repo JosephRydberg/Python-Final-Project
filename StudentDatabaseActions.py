@@ -81,7 +81,7 @@ def show_database():
 
     #Packing side left forces them on the same line. Having them centered allows for a list
     for row in results:
-        label_info = tkinter.Label(data_window, text=(f'{row[0]:}:{row[1]:10}{row[2]:10}{row[3]:10}{row[4]:10}{row[5]:15}{row[6]:10}')).pack()
+        label_info = tkinter.Label(data_window, text=(f'{row[0]:15}:  {row[1]:15}{row[2]:15}{row[3]:15}{row[4]:10}    {row[5]:15}{row[6]:15}')).pack()
 
     # Pack the button and frames
     exit_button.pack(side='right')
